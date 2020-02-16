@@ -3,8 +3,13 @@ from django.shortcuts import render
 # Create your views here.
 from django.http import HttpResponse
 
+from .models import Question
+
 def index(request):
-    return HttpResponse("Hello World")
+    lat_quest_list = Question.objects.order_by('-pub_date')[:5]
+    output = ', '.join([q.quest_text for q in lat_quest_list])
+
+    return HttpResponse(output)
 
 
 def detail(request, question_id):
